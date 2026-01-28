@@ -23,10 +23,16 @@ def clean_rating(rating):
     }
     return ratings_map.get(rating, 0)
 
+def clean_title(title):
+    if title is None:
+        return ''
+    title = title.replace('"', '')
+    return title.strip()
+
 
 def clean_book(book):
     return {
-        'title': book['title'],
+        'title': clean_title(book['title']),
         'price': clean_price(book['price']),
         'stock': clean_stock(book['stock']),
         'rating': clean_rating(book['rating'])

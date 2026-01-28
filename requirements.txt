@@ -1,3 +1,4 @@
+csv
 requests
 beautifulsoup4
 pandas

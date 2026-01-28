@@ -2,7 +2,7 @@ import time
 from bs4 import BeautifulSoup
 import requests
 
-def fetch(url):
+def fetch_page(url):
     result = requests.get(url)
     return BeautifulSoup(result.text, 'html.parser')
 
@@ -23,8 +23,20 @@ def parse(html):
     
     return data
 
+def fetch(url):
+    html = fetch_page(url)
+    pages = html.find('li', class_='current').text.strip()
+    total_pages = int(pages.split()[-1])
+    data = []
+    for i in range(1, total_pages + 1):
+        time.sleep(1)
+        next_page_url = f"{url}catalogue/page-{i}.html"
+        next_page_html = fetch_page(next_page_url)
+        data += parse(next_page_html)
+    return data
+
 
 if __name__ == "__main__":
     url = "https://books.toscrape.com/"
-    data = parse(fetch(url))
+    data = fetch(url)
     print(data)
