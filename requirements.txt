@@ -1,4 +1,6 @@
-csv
+sqlite3
+pathlib
+time
 requests
 beautifulsoup4
 pandas
